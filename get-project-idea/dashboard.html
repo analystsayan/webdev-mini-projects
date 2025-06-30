@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Dashboard</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="any" href="/img/gpifavicon.png" />
+    <link rel="apple-touch-icon" href="/img/gpifavicon-192x192.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="/img/gpifavicon-512x512.png" sizes="512x512">
+    
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+
+<body>
+    <div id="login-container">
+        <h1>Secure Dashboard</h1>
+        <p>Enter the passcode to access the dashboard</p>
+        <input type="password" id="passcode" placeholder="Enter Passcode">
+        <button id="submit-btn">Submit</button>
+        <p id="error-msg"></p>
+    </div>
+
+    <div id="dashboard-container" class="hidden">
+        <h1>Dashboard</h1>
+        <div id="cards-container">
+            <!-- Cards will be dynamically generated here -->
+        </div>
+    </div>
+
+    <script src="/js/dashboard.js"></script>
+</body>
+
+</html>

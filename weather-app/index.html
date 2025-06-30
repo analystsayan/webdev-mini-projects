@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="media/favicon_512.png" type="image/png">
+</head>
+<body>
+    <div class="container">
+        <div class="search-box">
+            <input type="text" id="location" placeholder="Enter location" autocomplete="off">
+            <div class="profile">
+                <img src="icons/account_circle_24dp_E8EAED_FILL0_wght300_GRAD0_opsz24.svg" alt="profile">
+            </div>
+            <div id="suggestions"></div>
+        </div>
+        <div class="weather-info" id="weather-info">
+            <div class="temp-box">
+                <p id="temperature"></p>
+                <p id="high-low"></p>
+            </div>
+            <div id="hourly-forecast-header"></div>
+            <div class="hourly-forecast" id="hourly-forecast"></div>
+            <div id="ten-day-forecast-header"></div>
+            <div class="ten-day-forecast" id="ten-day-forecast"></div>
+        </div>
+    </div>
+    <footer class="footer">
+        <p>Created with ♥ by <a href="https://www.sayanmondal.in">Sayan M.</a></p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

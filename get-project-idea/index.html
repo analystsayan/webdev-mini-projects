@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GetProjectIdea</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="any" href="/img/gpifavicon.png" />
+  <link rel="apple-touch-icon" href="/img/gpifavicon-192x192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/img/gpifavicon-512x512.png" sizes="512x512">
+
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+
+<body>
+  <header class="header">
+    <a href="index.html">
+      <h1 class="logo">Get Project !dea</h1>
+    </a>
+    <a href="https://forms.gle/2Q2o47US1gYLQ7us6" target="_blank" class="button-link">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+        <path d="M480-80q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80ZM320-200v-80h320v80H320Zm10-120q-69-41-109.5-110T180-580q0-125 87.5-212.5T480-880q125 0 212.5 87.5T780-580q0 81-40.5 150T630-320H330Zm24-80h252q45-32 69.5-79T700-580q0-92-64-156t-156-64q-92 0-156 64t-64 156q0 54 24.5 101t69.5 79Zm126 0Z"/>
+      </svg>Submit your idea
+    </a>
+  </header>
+
+  <div class="landing-page">
+    <h1 class="main-heading">Helping<br>Students With Crazy !deas</h1>
+    <p class="sub-heading">Submit your innovative project ideas and bring them<br> to life with collaboration and
+      technology.</p>
+    <button id="exploreBtn" class="action-button">Explore !deas</button>
+  </div>
+
+  <div class="filter-container">
+    <label for="filterDropdown">Filter by Category:</label>
+    <select id="filterDropdown">
+      <option value="all">All</option>
+    </select>
+  </div>  
+
+  <!-- Section for dynamically generated project cards -->
+  <section id="projectSection" class="card-container">
+    <!-- Cards will be dynamically loaded here using JavaScript -->
+  </section>
+
+  <!-- Section for full project details -->
+  <section id="project-details" class="hidden">
+    <button id="back-button">Back</button>
+    <div id="details-content"></div>
+  </section>
+
+  <div class="disclaimer">All the image credit goes to <a href="https://www.unsplash.com">unsplash.com</a></div>
+  <footer class="footer">
+    <div class="footer-left">
+      <a href="index.html">
+        <h1>Get Project !dea</h1>
+      </a>
+      <span class="footer-copyright">&copy; 2024 by Sayan M.</span>
+    </div>
+    <div class="footer-right">
+      <a href="https://www.linkedin.com/in/analystsayan/" target="_blank" class="social-link">LinkedIn</a>
+      <a href="https://github.com/analystsayan" target="_blank" class="social-link">GitHub</a>
+    </div>
+  </footer>
+
+  <script src="/js/script.js"></script>
+</body>
+
+</html>
