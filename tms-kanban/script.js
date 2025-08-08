@@ -36,6 +36,7 @@ function render() {
                     <div class="actions">
                         <button title="Mark Done" class="icon-btn mark-done"><svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"><path d="m424-312 282-282-56-56-226 226-114-114-56 56 170 170ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/></svg></button>
                         <button title="Duplicate" class="icon-btn duplicate"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M744-192H312q-29 0-50.5-21.5T240-264v-576q0-29 21.5-50.5T312-912h312l192 192v456q0 29-21.5 50.5T744-192ZM576-672v-168H312v576h432v-408H576ZM168-48q-29 0-50.5-21.5T96-120v-552h72v552h456v72H168Zm144-792v195-195 576-576Z"/></svg></button>
+                        <button title="Move" class="icon-btn move-menu"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M479.79-192Q450-192 429-213.21t-21-51Q408-294 429.21-315t51-21Q510-336 531-314.79t21 51Q552-234 530.79-213t-51 21Zm0-216Q450-408 429-429.21t-21-51Q408-510 429.21-531t51-21Q510-552 531-530.79t21 51Q552-450 530.79-429t-51 21Zm0-216Q450-624 429-645.21t-21-51Q408-726 429.21-747t51-21Q510-768 531-746.79t21 51Q552-666 530.79-645t-51 21Z"/></svg></button>
                         <button title="Delete" class="icon-btn delete"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="m291-240-51-51 189-189-189-189 51-51 189 189 189-189 51 51-189 189 189 189-51 51-189-189-189 189Z"/></svg></button>
                     </div>
                     </div>
@@ -56,6 +57,11 @@ function render() {
             });
             card.querySelector('.delete').addEventListener('click', e => {
                 if (confirm('Delete this task?')) { tasks = tasks.filter(x => x.id !== t.id); save(); render(); }
+            });
+
+            /* Move menu */
+            card.querySelector('.move-menu').addEventListener('click', (e) => {
+                showMoveMenu(e.currentTarget, t);
             });
 
             /* In-place edit: double-click title */
@@ -81,6 +87,36 @@ function render() {
         // count
         document.getElementById('count-' + s).textContent = items.length;
     });
+}
+
+/* Move menu function */
+function showMoveMenu(btn, task) {
+    closeMoveMenu(); // remove any existing menu
+    const menu = document.createElement('div');
+    menu.className = 'move-popup';
+    statuses.forEach(st => {
+        if (st !== task.status) {
+            const item = document.createElement('div');
+            item.textContent = 'Move to ' + formatStatus(st);
+            item.addEventListener('click', () => {
+                updateTask(task.id, { status: st });
+                if (st === 'done') triggerConfetti();
+                closeMoveMenu();
+            });
+            menu.appendChild(item);
+        }
+    });
+    document.body.appendChild(menu);
+    const rect = btn.getBoundingClientRect();
+    menu.style.top = rect.bottom + 'px';
+    menu.style.left = rect.left + 'px';
+    setTimeout(() => document.addEventListener('click', closeMoveMenu, { once: true }));
+}
+function closeMoveMenu() {
+    document.querySelectorAll('.move-popup').forEach(m => m.remove());
+}
+function formatStatus(s) {
+    return s === 'todo' ? 'To Do' : s === 'inprogress' ? 'In Progress' : s === 'review' ? 'Review' : 'Done';
 }
 
 /* Helpers */
@@ -148,7 +184,7 @@ document.querySelectorAll('.column').forEach(col => {
 function triggerConfetti() {
     const root = document.getElementById('confettiRoot');
     const colors = ['#7c5cff', '#60a5fa', '#34d399', '#f97316', '#f472b6', '#ffd166'];
-    const total = 30 + Math.floor(Math.random() * 20);
+    const total = 30 + Math.floor(Math.random() * 300);
     const width = window.innerWidth;
 
     for (let i = 0; i < total; i++) {

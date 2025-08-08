@@ -228,6 +228,27 @@ svg {
     color: var(--muted)
 }
 
+.move-popup {
+    position: absolute;
+    background: rgba(20, 25, 32, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 10000;
+    min-width: 120px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+.move-popup div {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.move-popup div:hover {
+    background: rgba(124, 92, 255, 0.12);
+}
+
 /* Footer */
 footer {
     margin-top: 18px;
