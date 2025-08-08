@@ -3,7 +3,6 @@
 const STORAGE_KEY = 'dark_kanban_tasks_v1';
 
 let tasks = []; // will hold task objects
-
 const statuses = ['todo', 'inprogress', 'review', 'done'];
 
 function uid() { return 't_' + Date.now() + '_' + Math.floor(Math.random() * 9999) }
@@ -22,24 +21,38 @@ function render() {
     statuses.forEach(s => {
         const list = document.getElementById('list-' + s);
         list.innerHTML = '';
-        const items = tasks.filter(t => t.status === s);
+
+        // Sort: starred first, then by createdAt
+        const items = tasks
+            .filter(t => t.status === s)
+            .sort((a, b) => {
+                if (b.starred === true && a.starred !== true) return 1;
+                if (a.starred === true && b.starred !== true) return -1;
+                return b.createdAt - a.createdAt;
+            });
+
         items.forEach(t => {
             const card = document.createElement('div');
             card.className = 'card';
             card.draggable = true;
             card.dataset.id = t.id;
             card.innerHTML = `
-                <h3>${escapeHtml(t.title)}</h3>
+                <div class="card-header">
+                    <h3>${escapeHtml(t.title)}</h3>
+                    <span class="star-icon" style="color:${t.starred ? 'gold' : '#dbe9f8a8'}" title="${t.starred ? 'Unstar' : 'Star'}">
+                        ${t.starred ? '&#9733;' : '&#9734;'}
+                    </span>
+                </div>
                 <p>${escapeHtml(t.desc || '')}</p>
                 <div class="meta">
-                    <span class="chip">${new Date(t.createdAt).toLocaleString()}</span>
+                    <span class="chip">${new Date(t.createdAt).toLocaleString([], { hour: '2-digit', minute: '2-digit', year: 'numeric', month: 'numeric', day: 'numeric' })}</span>
                     <div class="actions">
-                        <button title="Mark Done" class="icon-btn mark-done"><svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"><path d="m424-312 282-282-56-56-226 226-114-114-56 56 170 170ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/></svg></button>
-                        <button title="Duplicate" class="icon-btn duplicate"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M744-192H312q-29 0-50.5-21.5T240-264v-576q0-29 21.5-50.5T312-912h312l192 192v456q0 29-21.5 50.5T744-192ZM576-672v-168H312v576h432v-408H576ZM168-48q-29 0-50.5-21.5T96-120v-552h72v552h456v72H168Zm144-792v195-195 576-576Z"/></svg></button>
-                        <button title="Move" class="icon-btn move-menu"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="M479.79-192Q450-192 429-213.21t-21-51Q408-294 429.21-315t51-21Q510-336 531-314.79t21 51Q552-234 530.79-213t-51 21Zm0-216Q450-408 429-429.21t-21-51Q408-510 429.21-531t51-21Q510-552 531-530.79t21 51Q552-450 530.79-429t-51 21Zm0-216Q450-624 429-645.21t-21-51Q408-726 429.21-747t51-21Q510-768 531-746.79t21 51Q552-666 530.79-645t-51 21Z"/></svg></button>
-                        <button title="Delete" class="icon-btn delete"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"><path d="m291-240-51-51 189-189-189-189 51-51 189 189 189-189 51 51-189 189 189 189-51 51-189-189-189 189Z"/></svg></button>
+                        <button title="Mark Done" class="icon-btn mark-done"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#fff"><path d="M293-288 100-482l50-50 143 142 51 51-51 51Zm204 0L303-482l51-51 143 143 324-324 51 51-375 375Zm0-203-51-51 172-172 51 51-172 172Z"/></svg></button>
+                        <button title="Duplicate" class="icon-btn duplicate"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#fff"><path d="M744-192H312q-29 0-50.5-21.5T240-264v-576q0-29 21.5-50.5T312-912h312l192 192v456q0 29-21.5 50.5T744-192ZM576-672v-168H312v576h432v-408H576ZM168-48q-29 0-50.5-21.5T96-120v-552h72v552h456v72H168Zm144-792v195-195 576-576Z"/></svg></button>
+                        <button title="Move" class="icon-btn move-menu"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#fff"><path d="M479.79-192Q450-192 429-213.21t-21-51Q408-294 429.21-315t51-21Q510-336 531-314.79t21 51Q552-234 530.79-213t-51 21Zm0-216Q450-408 429-429.21t-21-51Q408-510 429.21-531t51-21Q510-552 531-530.79t21 51Q552-450 530.79-429t-51 21Zm0-216Q450-624 429-645.21t-21-51Q408-726 429.21-747t51-21Q510-768 531-746.79t21 51Q552-666 530.79-645t-51 21Z"/></svg></button>
+                        <button title="Delete" class="icon-btn delete"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#fff"><path d="m291-240-51-51 189-189-189-189 51-51 189 189 189-189 51 51-189 189 189 189-51 51-189-189-189 189Z"/></svg></button>
                     </div>
-                    </div>
+                </div>
             `;
             list.appendChild(card);
 
@@ -47,53 +60,73 @@ function render() {
             card.addEventListener('dragstart', onDragStart);
             card.addEventListener('dragend', onDragEnd);
 
+            /* Star toggle */
+            card.querySelector('.star-icon').addEventListener('click', () => {
+                t.starred = !t.starred;
+                save();
+                render();
+            });
+
             /* Actions */
-            card.querySelector('.mark-done').addEventListener('click', e => {
-                updateTask(t.id, { status: 'done' }); triggerConfetti();
+            card.querySelector('.mark-done').addEventListener('click', () => {
+                updateTask(t.id, { status: 'done' });
+                triggerConfetti();
             });
-            card.querySelector('.duplicate').addEventListener('click', e => {
+            card.querySelector('.duplicate').addEventListener('click', () => {
                 const copy = { ...t, id: uid(), createdAt: Date.now(), title: t.title + ' (copy)' };
-                tasks.push(copy); save(); render();
+                tasks.push(copy);
+                save();
+                render();
             });
-            card.querySelector('.delete').addEventListener('click', e => {
-                if (confirm('Delete this task?')) { tasks = tasks.filter(x => x.id !== t.id); save(); render(); }
+            card.querySelector('.delete').addEventListener('click', () => {
+                if (confirm('Delete this task?')) {
+                    tasks = tasks.filter(x => x.id !== t.id);
+                    save();
+                    render();
+                }
             });
 
             /* Move menu */
             card.querySelector('.move-menu').addEventListener('click', (e) => {
+                e.stopPropagation();
                 showMoveMenu(e.currentTarget, t);
             });
 
-            /* In-place edit: double-click title */
-            const titleEl = card.querySelector('h3');
-            titleEl.addEventListener('dblclick', e => {
+            /* In-place edit */
+            card.querySelector('h3').addEventListener('dblclick', () => {
                 const newTitle = prompt('Edit title', t.title);
-                if (newTitle != null) { updateTask(t.id, { title: newTitle.trim() }); }
+                if (newTitle != null) updateTask(t.id, { title: newTitle.trim() });
+            });
+            card.querySelector('p').addEventListener('dblclick', () => {
+                const newDesc = prompt('Edit description', t.desc);
+                if (newDesc != null) updateTask(t.id, { desc: newDesc.trim() });
             });
 
-            const descEl = card.querySelector('p');
-            descEl.addEventListener('dblclick', e => {
-                const newDesc = prompt('Edit title', t.desc);
-                if (newDesc != null) { updateTask(t.id, { title: newDesc.trim() }); }
-            });
-
-            /* Right-click to quick edit desc */
+            /* Right-click delete */
             card.addEventListener('contextmenu', e => {
                 e.preventDefault();
-                if (confirm('Delete this task?')) { tasks = tasks.filter(x => x.id !== t.id); save(); render(); }
+                if (confirm('Delete this task?')) {
+                    tasks = tasks.filter(x => x.id !== t.id);
+                    save();
+                    render();
+                }
             });
         });
 
-        // count
         document.getElementById('count-' + s).textContent = items.length;
     });
 }
 
-/* Move menu function */
+/* Move menu function (fixed for mobile) */
+let currentMoveMenu = null;
+
 function showMoveMenu(btn, task) {
-    closeMoveMenu(); // remove any existing menu
+    closeMoveMenu();
+
     const menu = document.createElement('div');
     menu.className = 'move-popup';
+    menu.dataset.taskId = task.id;
+
     statuses.forEach(st => {
         if (st !== task.status) {
             const item = document.createElement('div');
@@ -106,17 +139,40 @@ function showMoveMenu(btn, task) {
             menu.appendChild(item);
         }
     });
+
     document.body.appendChild(menu);
+
+    // Position correctly under clicked button
     const rect = btn.getBoundingClientRect();
-    menu.style.top = rect.bottom + 'px';
-    menu.style.left = rect.left + 'px';
-    setTimeout(() => document.addEventListener('click', closeMoveMenu, { once: true }));
+    menu.style.position = 'absolute';
+    menu.style.top = `${rect.bottom + window.scrollY + 5}px`;
+    menu.style.left = `${rect.left + window.scrollX - 125}px`;
+
+    currentMoveMenu = menu;
+
+    setTimeout(() => {
+        document.addEventListener('click', outsideClickHandler);
+    }, 0);
 }
+
+function outsideClickHandler(e) {
+    if (currentMoveMenu && !currentMoveMenu.contains(e.target) && !e.target.closest('.move-menu')) {
+        closeMoveMenu();
+    }
+}
+
 function closeMoveMenu() {
-    document.querySelectorAll('.move-popup').forEach(m => m.remove());
+    if (currentMoveMenu) {
+        currentMoveMenu.remove();
+        currentMoveMenu = null;
+        document.removeEventListener('click', outsideClickHandler);
+    }
 }
+
 function formatStatus(s) {
-    return s === 'todo' ? 'To Do' : s === 'inprogress' ? 'In Progress' : s === 'review' ? 'Review' : 'Done';
+    return s === 'todo' ? 'To Do' :
+        s === 'inprogress' ? 'In Progress' :
+        s === 'review' ? 'Review' : 'Done';
 }
 
 /* Helpers */
@@ -136,24 +192,22 @@ document.getElementById('addTask').addEventListener('click', () => {
     const desc = document.getElementById('newDesc').value.trim();
     const status = document.getElementById('newStatus').value;
     if (!title) { alert('Please give a title'); return; }
-    const task = { id: uid(), title, desc, status, createdAt: Date.now() };
+    const task = { id: uid(), title, desc, status, createdAt: Date.now(), starred: false };
     tasks.push(task);
     save(); render();
-    document.getElementById('newTitle').value = ''; document.getElementById('newDesc').value = '';
+    document.getElementById('newTitle').value = '';
+    document.getElementById('newDesc').value = '';
 });
 
 /* Drag and drop handlers */
 let draggedId = null;
 function onDragStart(e) {
-    const el = e.currentTarget;
-    draggedId = el.dataset.id;
-    el.classList.add('dragging');
+    draggedId = e.currentTarget.dataset.id;
+    e.currentTarget.classList.add('dragging');
     e.dataTransfer.setData('text/plain', draggedId);
-    e.dataTransfer.effectAllowed = 'move';
 }
 function onDragEnd(e) {
-    const el = e.currentTarget;
-    el.classList.remove('dragging');
+    e.currentTarget.classList.remove('dragging');
     draggedId = null;
 }
 
@@ -161,10 +215,9 @@ function onDragEnd(e) {
 document.querySelectorAll('.column').forEach(col => {
     col.addEventListener('dragover', e => {
         e.preventDefault();
-        e.dataTransfer.dropEffect = 'move';
         col.classList.add('over');
     });
-    col.addEventListener('dragleave', e => { col.classList.remove('over') });
+    col.addEventListener('dragleave', e => col.classList.remove('over'));
     col.addEventListener('drop', e => {
         e.preventDefault();
         col.classList.remove('over');
@@ -174,13 +227,12 @@ document.querySelectorAll('.column').forEach(col => {
         if (!t) return;
         const prevStatus = t.status;
         t.status = target;
-        save();
-        render();
+        save(); render();
         if (target === 'done' && prevStatus !== 'done') triggerConfetti();
     });
 });
 
-/* Confetti sprinkle from top when DONE */
+/* Confetti */
 function triggerConfetti() {
     const root = document.getElementById('confettiRoot');
     const colors = ['#7c5cff', '#60a5fa', '#34d399', '#f97316', '#f472b6', '#ffd166'];
@@ -195,16 +247,10 @@ function triggerConfetti() {
         piece.style.height = (size * 0.6) + 'px';
         piece.style.left = Math.floor(Math.random() * width) + 'px';
         piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-        piece.style.opacity = (0.85 + Math.random() * 0.15);
         const dur = 1200 + Math.floor(Math.random() * 1200);
         piece.style.animationDuration = dur + 'ms';
-        piece.style.transform = `translateX(${(Math.random() - 0.5) * 80}px) rotate(${Math.random() * 360}deg)`;
         root.appendChild(piece);
-
-        // cleanup after animation
-        setTimeout(() => {
-            piece.remove();
-        }, dur + 200);
+        setTimeout(() => piece.remove(), dur + 200);
     }
 }
 
@@ -228,10 +274,10 @@ document.getElementById('importFile').addEventListener('change', function () {
         try {
             const imported = JSON.parse(reader.result);
             if (!Array.isArray(imported)) throw new Error('Invalid file');
-            // simple merge with new ids if collisions
             imported.forEach(it => {
                 it.id = it.id || uid();
                 it.createdAt = it.createdAt || Date.now();
+                if (typeof it.starred !== 'boolean') it.starred = false;
             });
             tasks = tasks.concat(imported);
             save(); render();
@@ -244,49 +290,67 @@ document.getElementById('importFile').addEventListener('change', function () {
 });
 
 document.getElementById('clearAll').addEventListener('click', () => {
-    if (confirm('Clear all tasks? This cannot be undone.')) {
+    if (confirm('Clear all tasks?')) {
         tasks = []; save(); render();
     }
 });
 
-/* keyboard: quickly add by Enter on title */
+/* Enter key add */
 document.getElementById('newTitle').addEventListener('keydown', e => {
     if (e.key === 'Enter') { e.preventDefault(); document.getElementById('addTask').click(); }
 });
 
-/* init with sample if empty */
+/* Init */
 load();
-if (tasks.length === 0) {
-    tasks = [
-    ];
-    save();
-}
 render();
 
-/* Accessibility: keyboard support for moving selected card with arrows (bonus) */
+
+/* --------------------------------------------
+    Keyboard Accessibility for Kanban Cards
+   -------------------------------------------- */
 let selectedCard = null;
+
+// Select a card when clicked
 document.addEventListener('click', (e) => {
     const card = e.target.closest('.card');
     if (card) {
         if (selectedCard) selectedCard.style.outline = '';
         selectedCard = card;
-        card.style.outline = '2px solid rgba(124,92,255,0.2)';
+        card.style.outline = '2px solid rgba(124,92,255,0.5)';
         card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } else {
         if (selectedCard) selectedCard.style.outline = '';
         selectedCard = null;
     }
 });
+
+// Move card with arrow keys
 document.addEventListener('keydown', (e) => {
     if (!selectedCard) return;
     const id = selectedCard.dataset.id;
     const t = findTask(id);
     if (!t) return;
-    if (e.key === 'ArrowRight') {
-        const idx = statuses.indexOf(t.status);
-        if (idx < statuses.length - 1) updateTask(id, { status: statuses[idx + 1] });
-    } else if (e.key === 'ArrowLeft') {
-        const idx = statuses.indexOf(t.status);
-        if (idx > 0) updateTask(id, { status: statuses[idx - 1] });
+
+    const idx = statuses.indexOf(t.status);
+
+    if (e.key === 'ArrowRight' && idx < statuses.length - 1) {
+        moveCardWithAnimation(id, statuses[idx + 1]);
+    }
+    else if (e.key === 'ArrowLeft' && idx > 0) {
+        moveCardWithAnimation(id, statuses[idx - 1]);
     }
 });
+
+// Helper to move card with animation
+function moveCardWithAnimation(id, newStatus) {
+    selectedCard.classList.add('card-moving');
+    updateTask(id, { status: newStatus });
+
+    // Delay to allow animation before removing class
+    setTimeout(() => {
+        if (selectedCard) {
+            selectedCard.classList.remove('card-moving');
+            selectedCard.style.outline = '2px solid rgba(124,92,255,0.5)';
+        }
+    }, 300);
+}

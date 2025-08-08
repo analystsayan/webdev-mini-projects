@@ -13,18 +13,19 @@
     <header>
         <div>
             <h1>TMS</h1>
-            <p class="muted">Drag tasks between columns.</p>
+            <p class="muted">Drag tasks between stages.</p>
         </div>
         <div class="controls" style="margin-left:auto">
             <button id="clearAll" class="small">Clear All</button>
             <button id="exportBtn" class="small">Export JSON</button>
-            <button id="importBtn" class="small">Import</button>
+            <button id="importBtn" class="small">Import JSON</button>
             <input id="importFile" type="file" accept="application/json" style="display:none" />
         </div>
     </header>
 
     <!-- Add task -->
-    <div class="add-area" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;align-items:center;justify-content:left;">
+    <div class="add-area"
+        style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;align-items:center;justify-content:left;">
         <div>
             <input id="newTitle" placeholder="Task title" />
         </div>
@@ -40,7 +41,7 @@
             </select>
         </div>
         <div>
-            <button id="addTask" class="add-btn">+ Add</button>
+            <button id="addTask" class="add-btn">+ Add Task</button>
         </div>
     </div>
 
@@ -81,7 +82,8 @@
     <div class="confetti" id="confettiRoot" aria-hidden="true"></div>
 
     <footer>
-        <span class="muted">Saved locally in your browser • Double-click a card title to edit • Right-click for
+        <span class="muted">Saved locally in your browser • Double-click a card title & Description to edit •
+            Right-click for
             delete</span>
     </footer>
 
