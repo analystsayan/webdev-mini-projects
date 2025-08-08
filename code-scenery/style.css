@@ -1,0 +1,36 @@
+* {
+    background-color: blueviolet;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+}
+
+#wall {
+    background-color: rgb(205, 111, 111);
+    height: 300px;
+    width: 300px;
+    position: fixed;
+    top: 250px;
+}
+
+#door {
+    background-color: brown;
+    height: 80px;
+    width: 60px;
+}
+
+#window-left {
+    background-color: brown;
+    height: 60px;
+    width: 60px;
+}
+
+#window-right {
+    background-color: brown;
+    height: 60px;
+    width: 60px;
+}

@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+:root {
+    --primary:#000814;
+    --secondary:#001d3d;
+    --terciary: #003566;
+    --accent-1: #ffc300;
+    --accent-2: #ffd60a;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+.navbar {
+    background-color: var(--accent-1);
+}
+
+.navbar ul li {
+    color: var(--secondary);
+}
+.navbar ul li:hover {
+    background-color: var(--accent-2);
+}
+
+.landing {
+    position: relative;
+    min-height: calc(100vh - 50px);
+    min-height: calc(100vh - 50px);
+    background-image: linear-gradient(to right, var(--terciary), var(--terciary));
+    background-position: center;
+    background-size: cover;
+}
+
+.landing::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
+    z-index: 1;
+}
+
+.deliver-png, .landing h1, .landing p, .buttons {
+    z-index: 2;
+}

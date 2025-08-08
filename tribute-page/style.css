@@ -1,0 +1,20 @@
+* {
+    background-color: darkslategrey;
+    padding: 0;
+    margin: 0;
+}
+
+.universel {
+    display: flex;
+    flex-wrap: wrap;
+    height: 670px;
+    background-color: darkslategrey;
+    border: 10px solid white;
+}
+
+.wishbg {
+    background-color: aliceblue;
+    color: black;
+    height: 50px;
+    width: auto;
+}

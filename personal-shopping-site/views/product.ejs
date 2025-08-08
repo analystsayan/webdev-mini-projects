@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><%= product.name %> | Product Details</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <a href="/products">Back to Products</a>
+    </header>
+    <div class="product-detail">
+        <h1><%= product.name %></h1>
+        <img src="<%= product.isBundle ? product.images[0] : product.image %>" alt="<%= product.name %>">
+        <p>Category: <%= product.category %></p>
+        <p>Price: ₹<%= product.price %></p>
+        <p><%= product.isBundle ? "This is a bundle product." : "This is a single product." %></p>
+        
+        <!-- Buy Now Button -->
+        <form action="/products/buy" method="POST">
+            <input type="hidden" name="productId" value="<%= product.id %>">
+            <button type="submit">Buy Now</button>
+        </form>
+    </div>
+</body>
+</html>

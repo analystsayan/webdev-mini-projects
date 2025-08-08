@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="formbox">
+            <h1 id="header">Sign Up</h1>
+            <form>
+                <input type="name" placeholder="Name" id="name">
+                <input type="email" placeholder="Email">
+                <input type="password" placeholder="Password">
+            </form>
+            <p>Forgot Password?<a href="#">Click Here</a></p>
+            <div class="btnContainer">
+                <button type="button" id="signUp">Sign up</button>
+                <button type="button" id="signIn" class="disabled">Sign in</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        let name = document.getElementById("name");
+        let header = document.getElementById("header");
+        let signUp = document.getElementById("signUp");
+        let signIn = document.getElementById("signIn");
+
+        signUp.onclick = function() {
+            header.innerHTML = "Sign Up";
+            name.style.maxHeight = "40px";
+            signUp.classList.remove("disabled");
+            signIn.classList.add("disabled");
+        }
+
+        signIn.onclick = function() {
+            header.innerHTML = "Sign In";
+            name.style.maxHeight = "0";
+            signUp.classList.add("disabled");
+            signIn.classList.remove("disabled");
+        }
+
+
+    </script>
+</body>
+</html>

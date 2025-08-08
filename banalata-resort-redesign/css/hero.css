@@ -1,0 +1,146 @@
+.hero {
+    position: relative;
+    width: 100%;
+    height: 75vh;
+    overflow: hidden;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-slide {
+    display: flex;
+    width: 500%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+    flex: 1;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+    z-index: 9;
+}
+
+.overlay h2 {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    z-index: 10px;
+    color: #f1faee;
+    text-shadow: 2px 2px 2px rgb(0, 0, 0);
+}
+
+.actionBtns {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    gap: 20px;
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 10;
+    padding: 1em;
+    background: #000000b8;
+}
+
+.actionBtns button {
+    font-size: .9rem;
+    padding: .8em 2em;
+}
+
+.actionBtns .know-more {
+    background: transparent;
+    color: #f1faee;
+    border: solid 2px #f1faee;
+    transition: background-color 0.3s ease;
+}
+
+.actionBtns .book-now {
+    background: var(--highlight-color);
+    color: #f1faee;
+    transition: background-color 0.3s ease;
+}
+
+/* Carousel Buttons */
+.carousel-btn {
+    height: 100%;
+    width: 100px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    color: #f1faee;
+    border: none;
+    font-size: 4rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.3s ease;
+    border-radius: 0;
+}
+
+.left-btn {
+    left: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.left-btn:hover {
+    color: #f1faee;
+    background: linear-gradient(to right, rgba(0, 0, 0),rgba(0, 0, 0, 0.5), transparent);
+}
+
+.right-btn {
+    right: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.right-btn:hover {
+    color: #f1faee;
+    background: linear-gradient(to left, rgba(0, 0, 0),rgba(0, 0, 0, 0.5), transparent);
+}
+
+/* Progress Indicators */
+.progress-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.dot {
+    width: 15px;
+    height: 15px;
+    border: 1px solid #f1faee;
+    /* Default unfilled */
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.dot.active {
+    background-color: var(--accent-color);
+}
