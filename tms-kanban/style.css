@@ -3,7 +3,7 @@
     --font-color: #dbe9f8;
     --panel: #0f1720;
     --muted: #dbe9f8a8;
-    --accent: #7c5cff;
+    --accent: #a954ff;
     --card: #0c1116;
     --glass: rgba(255, 255, 255, 0.03);
     --done: #22c55e;
@@ -110,7 +110,7 @@ header p {
 }
 
 .add-btn {
-    background: linear-gradient(90deg, var(--accent), #5ddcff);
+    background: linear-gradient(45deg, var(--accent), #00f2ff);
     padding: 8px 12px;
     border-radius: 8px;
     border: none;
