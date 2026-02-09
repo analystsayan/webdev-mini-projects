@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+:root {
+    --background: #704545;
+    --color: #d0b5b5;
+    --text-color: #333;
+    --title-font-size: clamp(.7rem, 8vw, 1.5rem);
+    --subtitle-font-size: clamp(.6rem, 6vw, 1.2rem);
+    --paragraph-font-size: clamp(.5rem, 5vw, 1rem);
+}
+
+* {
+    margin: 0;
+    padding: 0;  
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.profile-container {
+    max-width: 100vw;
+    min-height: 100vh;
+    background-color: var(--background);
+    color: var(--text-color);
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.cards {
+    width: 100%;
+    max-width: 350px;
+    background-color: #ffffff;
+    padding: 1em;
+    border-radius: 32px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.27);
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+}
+
+.cards ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+}
+
+.profile-image img {
+    width: 70%;
+    aspect-ratio: 1 /1;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.skill-card ul li {
+    font-size: var(--paragraph-font-size);
+    background: #d0b5b5;
+    padding: .5em;
+    border-radius: 10px;
+}
+
+.portfolio-card {
+    padding: 0;
+}
+
+.portfolio-card a {
+    width: 100%;
+    text-decoration: none;
+    font-size: var(--subtitle-font-size);
+    font-weight: 600;
+    color: var(--background);
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 1em 2em;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.portfolio-card a:hover {
+    background-color: #fff;
+    color: #000;
+    font-size: var(--subtitle-font-size);
+    border-radius: 30px;
+}
+
+.social-card img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.name {
+    font-size: var(--title-font-size);
+    font-weight: 700;
+}
+.role {
+    font-size: var(--subtitle-font-size);
+    font-weight: 500;
+}
+.bio {
+    font-size: var(--paragraph-font-size);
+    margin-top: .5em;
+}
+.skill,
+.social {
+    font-size: var(--title-font-size);
+    font-weight: 600;
+}
+
